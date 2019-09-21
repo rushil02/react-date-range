@@ -68,9 +68,20 @@ class Month extends PureComponent {
               const isEndOfMonth = isSameDay(day, monthDisplay.endDateOfMonth);
               const isOutsideMinMax =
                 (minDate && isBefore(day, minDate)) || (maxDate && isAfter(day, maxDate));
-              const isDisabledSpecifically = disabledDates.some(disabledDate =>
-                isSameDay(disabledDate, day)
-              );
+              const isDisabledSpecifically = disabledDates.some(disabledDate => {
+                //DisabledDate can be either an object like `{startDate: new Date(), endDate: new Date()}`
+                //or just `new Date()`
+                if(disabledDate instanceof Date){
+                  isSameDay(disabledDate, day)
+                }
+                else if(disabledDate instanceof Object){
+                  isWithinInterval(day, {
+                    start: disabledDate.startDate,
+                    end: disabledDate.endDate
+                  })
+                }
+                // else should raise error?
+              });
               return (
                 <DayCell
                   {...this.props}
