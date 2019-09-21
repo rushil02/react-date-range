@@ -72,10 +72,10 @@ class Month extends PureComponent {
                 //DisabledDate can be either an object like `{startDate: new Date(), endDate: new Date()}`
                 //or just `new Date()`
                 if(disabledDate instanceof Date){
-                  isSameDay(disabledDate, day)
+                  return isSameDay(disabledDate, day)
                 }
                 else if(disabledDate instanceof Object){
-                  isWithinInterval(day, {
+                  return isWithinInterval(day, {
                     start: disabledDate.startDate,
                     end: disabledDate.endDate
                   })
